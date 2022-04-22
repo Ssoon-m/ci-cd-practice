@@ -41,9 +41,10 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          builder: ${{ steps.buildx.outputs.name }}
+          # builder: ${{ steps.buildx.outputs.name }}
+          builder: 'ghcr.io/ssoon-m'
           push: true
-          tags: ${{ env.DOCKER_IMAGE }}:0.0.1
+          tags: ${{ env.DOCKER_IMAGE }}:latest
   # 배포 Job
   deploy:
     needs: build  # build 후에 실행되도록 정의
@@ -59,5 +60,5 @@ jobs:
       # 3000 -> 80 포트로 수행하도록 지정
       - name: Docker run
         run: |
-          docker stop ${{ env.NAME }} && docker rm ${{ env.NAME }} && docker rmi ${{ env.DOCKER_IMAGE }}:0.0.1
-          docker run -d -p 80:3000 --name go_cicd --restart always ${{ env.DOCKER_IMAGE }}:0.0.1
+          docker stop ${{ env.NAME }} && docker rm ${{ env.NAME }} && docker rmi ${{ env.DOCKER_IMAGE }}:latest
+          docker run -d -p 80:3000 --name go_cicd --restart always ${{ env.DOCKER_IMAGE }}:latest

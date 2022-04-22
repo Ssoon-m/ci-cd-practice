@@ -7,7 +7,7 @@ on:
 
 # 환경설정
 env:
-  DOCKER_IMAGE: ghcr.io/${{ github.actor }}/ci-cd-practice
+  DOCKER_IMAGE: ghcr.io/ssoon-m/ci-cd-practice
   VERSION: ${{ github.sha }}
   NAME: go_cicd
 
@@ -41,8 +41,8 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          # builder: ${{ steps.buildx.outputs.name }}
-          builder: 'ghcr.io/ssoon-m/ci-cd-practice:latest'
+          builder: ${{ steps.buildx.outputs.name }}
+          
           push: true
           tags: ${{ env.DOCKER_IMAGE }}:latest
   # 배포 Job
